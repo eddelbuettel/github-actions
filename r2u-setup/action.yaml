@@ -1,0 +1,23 @@
+name: Setup r2u
+description: Sets up r2u inside Ubuntu
+
+inputs:
+  bspm-version-check:
+    description: >-
+      Determines whether 'bspm' considers non-binary packages in addition to
+      the .deb packages is focusses. Setting it to FALSE makes the run a
+      littler faster but will miss a new source package when the binary may
+      not yet have been built. Values are TRUE or FALSE (as uppercase strings).
+    required: true
+    default: 'TRUE'
+
+runs:
+  using: "composite"
+  steps:
+    - name: Setup
+      id: r2u-setup
+      env:
+        GH_TOKEN: ${{ github.token }}
+        BSPM_VERSION_CHECK: ${{ inputs.bspm-version-check }}
+      run: bash "${{ github.action_path }}/r2u_setup.sh"
+      shell: bash
