@@ -33,7 +33,7 @@ echo "Pin-Priority: 700" | sudo tee -a /etc/apt/preferences.d/99cranapt
 sudo apt update -qq && sudo apt install --yes --no-install-recommends r-base-core littler r-cran-docopt
 sudo Rscript -e 'install.packages("bspm")'
 echo "suppressMessages(bspm::enable())" | sudo tee -a /etc/R/Rprofile.site
-echo "options(bspm.version.check="${BSPM_VERSION_CHECK}")" >> ${RHOME}/etc/Rprofile.site
+echo "options(bspm.version.check="${BSPM_VERSION_CHECK}")" | sudo tee -a /etc/R/Rprofile.site
 cd /usr/local/bin
 sudo ln -s /usr/lib/R/site-library/littler/examples/install.r .
 sudo ln -s /usr/lib/R/site-library/littler/examples/install2.r .
