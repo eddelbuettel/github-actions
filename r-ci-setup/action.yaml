@@ -1,0 +1,10 @@
+name: Setup r-ci
+description: Fetch run.sh script 
+
+runs:
+  using: "composite"
+  steps:
+    - name: Setup
+      id: r-ci-setup
+      run: curl -OLs https://eddelbuettel.github.io/r-ci/run.sh && chmod 0755 run.sh
+      shell: bash
