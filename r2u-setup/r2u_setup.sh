@@ -2,7 +2,8 @@
 
 ## See the README.md of 'r2u' for details on these steps
 ##
-## This script has been tested on a plain and minimal ubuntu:22.04
+## This script has initially been tested on a plain and minimal ubuntu:22.04, and has now been
+## generalized to support 24.04 by relying on `lsb_release -cs` to echo the release name
 ##
 ## On a well-connected machine this script should take well under one minute
 ##
@@ -15,7 +16,7 @@ grep -q '^NAME="Ubuntu"' /etc/os-release || (echo "Not an Ubuntu system"; exit -
 
 ## First: update apt, install binaries we need and get keys
 ## Note that when testing in a container you also need to add `sudo` and `wget` first.
-sudo apt update -qq && sudo apt install --yes --no-install-recommends wget ca-certificates gnupg python3-{dbus,gi,apt} make lsb-release
+sudo apt update -qq && sudo DEBIAN_FRONTEND=noninteractive apt install --yes --no-install-recommends wget ca-certificates gnupg python3-{dbus,gi,apt} make lsb-release
 wget -q -O- https://eddelbuettel.github.io/r2u/assets/dirk_eddelbuettel_key.asc | sudo tee -a /etc/apt/trusted.gpg.d/cranapt_key.asc
 wget -q -O- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | sudo tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
 
@@ -34,7 +35,7 @@ echo "Pin-Priority: 700" | sudo tee -a /etc/apt/preferences.d/99cranapt
 sudo apt update -qq && sudo apt install --yes --no-install-recommends r-base-core littler r-cran-docopt
 sudo Rscript -e 'install.packages("bspm")'
 echo "suppressMessages(bspm::enable())" | sudo tee -a /etc/R/Rprofile.site
-echo "options(bspm.version.check="${BSPM_VERSION_CHECK}")" | sudo tee -a /etc/R/Rprofile.site
+echo "options(bspm.version.check="${BSPM_VERSION_CHECK:-TRUE}")" | sudo tee -a /etc/R/Rprofile.site
 cd /usr/local/bin
 sudo ln -s /usr/lib/R/site-library/littler/examples/install.r .
 sudo ln -s /usr/lib/R/site-library/littler/examples/install2.r .
