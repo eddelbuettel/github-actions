@@ -14,13 +14,14 @@ set -eu
 grep -q '^NAME="Ubuntu"' /etc/os-release || (echo "Not an Ubuntu system"; exit -1)
 
 ## First: update apt, install binaries we need and get keys
-sudo apt update -qq && sudo apt install --yes --no-install-recommends wget ca-certificates gnupg python3-{dbus,gi,apt} make
+## Note that when testing in a container you also need to add `sudo` and `wget` first.
+sudo apt update -qq && sudo apt install --yes --no-install-recommends wget ca-certificates gnupg python3-{dbus,gi,apt} make lsb-release
 wget -q -O- https://eddelbuettel.github.io/r2u/assets/dirk_eddelbuettel_key.asc | sudo tee -a /etc/apt/trusted.gpg.d/cranapt_key.asc
 wget -q -O- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | sudo tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
 
 ## Second: add r2u repo and CRAN's ubuntu R repo
-echo "deb [arch=amd64] https://r2u.stat.illinois.edu/ubuntu jammy main" | sudo tee -a /etc/apt/sources.list.d/cranapt.list
-echo "deb [arch=amd64] https://cloud.r-project.org/bin/linux/ubuntu jammy-cran40/" | sudo tee -a /etc/apt/sources.list.d/cran_r.list
+echo "deb [arch=amd64] https://r2u.stat.illinois.edu/ubuntu "$(lsb_release -cs)" main" | sudo tee -a /etc/apt/sources.list.d/cranapt.list
+echo "deb [arch=amd64] https://cloud.r-project.org/bin/linux/ubuntu "$(lsb_release -cs)"-cran40/" | sudo tee -a /etc/apt/sources.list.d/cran_r.list
 sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 67C2D66C4B1D4339 51716619E084DAB9
 
 ## Third: add pinning to ensure package sorting
