@@ -2,8 +2,9 @@
 ## github-action 'r-ci-setup'
 
 This action sets up [r-ci](https://eddelbuettel.github.io/r-ci) for an action
-running Ubuntu 22.04 aka 'jammy' by fetching its (portable, not specific to
-GitHub Actions) script `run.sh` and making it executable.
+running Ubuntu 'latest' by fetching its (portable, not specific to GitHub
+Actions) script `run.sh` and making it executable. It was initially written
+for Ubuntu 22.04 aka 'jammy' but work equally for Ubuntu 24.04 aka 'noble'.
 
 ### Author
 
