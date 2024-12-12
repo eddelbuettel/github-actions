@@ -1,5 +1,5 @@
 
-## github-action 'r-ci-setup-bootstrap'
+## github-action 'r-ci'
 
 This action sets up [r-ci](https://eddelbuettel.github.io/r-ci) for an action
 running Ubuntu 'latest' (or a versioned Ubuntu, or 'macos-latest') by
@@ -8,7 +8,8 @@ making it executable. It was initially written for Ubuntu 22.04 aka 'jammy'
 but work equally for Ubuntu 24.04 aka 'noble', as well as for 'macOS-latest'.
 
 This version builds on the predecessor 'r-ci-setup' and includes the
-commonly-following 'bootstrap' step.
+commonly-following 'bootstrap' step for an all-in 'r-ci' preparation
+including setup and bootstrap.
 
 ### Author
 

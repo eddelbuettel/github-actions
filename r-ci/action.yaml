@@ -5,7 +5,7 @@ runs:
   using: "composite"
   steps:
     - name: Setup
-      id: r-ci-setup-bootstrap
+      id: r-ci
       run: |
         curl -OLs https://eddelbuettel.github.io/r-ci/run.sh
         chmod 0755 run.sh
