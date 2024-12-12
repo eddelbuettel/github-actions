@@ -1,0 +1,13 @@
+name: Setup and bootstrap r-ci
+description: Fetch run.sh script and bootstrap
+
+runs:
+  using: "composite"
+  steps:
+    - name: Setup
+      id: r-ci-setup-bootstrap
+      run: |
+        curl -OLs https://eddelbuettel.github.io/r-ci/run.sh
+        chmod 0755 run.sh
+        ./run.sh bootstrap
+      shell: bash
