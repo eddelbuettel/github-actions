@@ -1,13 +1,24 @@
 name: Setup and bootstrap r-ci
 description: Fetch run.sh script and bootstrap
 
+inputs:
+  dev_version:
+    description: |
+      Whether to use development version or release version of `run.sh`
+    required: false
+    default: 'FALSE'
+
 runs:
   using: "composite"
   steps:
     - name: Setup
       id: r-ci
       run: |
-        curl -OLs https://eddelbuettel.github.io/r-ci/run.sh
+        if [[ ${{ inputs.dev_version }} == "TRUE" ]]; then
+            curl -Ls https://eddelbuettel.github.io/r-ci/dev_run.sh -o run.sh
+        else
+            curl -OLs https://eddelbuettel.github.io/r-ci/run.sh
+        fi
         chmod 0755 run.sh
         ./run.sh bootstrap
       shell: bash

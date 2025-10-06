@@ -3,7 +3,7 @@ description: Sets up r2u inside Ubuntu
 
 inputs:
   bspm-version-check:
-    description: >-
+    description: |
       Determines whether 'bspm' considers non-binary packages in addition to
       the .deb packages is focusses. Setting it to FALSE makes the run a
       littler faster but will miss a new source package when the binary may
