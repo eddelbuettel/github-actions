@@ -14,11 +14,13 @@ runs:
     - name: Setup
       id: r-ci
       run: |
-        if [[ ${{ inputs.dev_version }} == "TRUE" ]]; then
-            curl -Ls https://eddelbuettel.github.io/r-ci/dev_run.sh -o run.sh
-        else
-            curl -OLs https://eddelbuettel.github.io/r-ci/run.sh
-        fi
+        ## We currently do no need or provide a dev version so we just get run.sh
+        #if [[ ${{ inputs.dev_version }} == "TRUE" ]]; then
+        #    curl -Ls https://eddelbuettel.github.io/r-ci/dev_run.sh -o run.sh
+        #else
+        #    curl -OLs https://eddelbuettel.github.io/r-ci/run.sh
+        #fi
+        curl -OLs https://eddelbuettel.github.io/r-ci/run.sh
         chmod 0755 run.sh
         ./run.sh bootstrap
       shell: bash
