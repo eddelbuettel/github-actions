@@ -7,6 +7,9 @@ fetching its (portable, not specific to GitHub Actions) script `run.sh` and
 making it executable. It was initially written for Ubuntu 22.04 aka 'jammy'
 but work equally for Ubuntu 24.04 aka 'noble', as well as for 'macOS-latest'.
 
+Note that the newer action `r-ci` supersedes it: by including the
+`bootstrap` step this action still requires it is simpler to use. 
+
 ### Author
 
 This action has been put together by Dirk Eddelbuettel.
