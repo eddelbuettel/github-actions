@@ -16,7 +16,7 @@ grep -q '^NAME="Ubuntu"' /etc/os-release || (echo "Not an Ubuntu system"; exit -
 
 ## First: update apt, install binaries we need and get keys
 ## Note that when testing in a container you also need to add `sudo` and `wget` first.
-sudo apt update -qq && sudo DEBIAN_FRONTEND=noninteractive apt install --yes --no-install-recommends wget ca-certificates gnupg python3-{dbus,gi,apt} make lsb-release
+sudo apt update -qq && sudo DEBIAN_FRONTEND=noninteractive apt install --yes --no-install-recommends wget ca-certificates gnupg python3-{gi,apt} make lsb-release
 wget -q -O- https://eddelbuettel.github.io/r2u/assets/dirk_eddelbuettel_key.asc | sudo tee -a /etc/apt/trusted.gpg.d/cranapt_key.asc
 wget -q -O- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | sudo tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
 
@@ -33,8 +33,9 @@ echo "Pin-Priority: 700" | sudo tee -a /etc/apt/preferences.d/99cranapt
 
 ## Fourth: install bspm (and its Python requirements) and enable it (with speed preference)
 sudo apt update -qq && sudo apt install --yes --no-install-recommends r-base-core littler r-cran-docopt
-sudo Rscript -e 'install.packages("bspm")'
+sudo Rscript -e 'install.packages("bspm", configure.args="--without-dbus-service")'
 echo "suppressMessages(bspm::enable())" | sudo tee -a /etc/R/Rprofile.site
+echo "options(bspm.sudo=TRUE)" | sudo tee -a /etc/R/Rprofile.site
 echo "options(bspm.version.check="${BSPM_VERSION_CHECK:-TRUE}")" | sudo tee -a /etc/R/Rprofile.site
 cd /usr/local/bin
 sudo ln -s /usr/lib/R/site-library/littler/examples/install.r .
