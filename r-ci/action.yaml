@@ -7,6 +7,11 @@ inputs:
       Whether to use development version or release version of `run.sh`
     required: false
     default: 'FALSE'
+  backend:
+    description: |
+      Whether to use 'BSPM' or 'RAPT' as backend (and use upper-case to select either)
+    required: false
+    default: 'BSPM'
 
 runs:
   using: "composite"
@@ -21,5 +26,6 @@ runs:
             curl -OLs https://eddelbuettel.github.io/r-ci/run.sh
         fi
         chmod 0755 run.sh
+        export BACKEND=${{ inputs.backend }}
         ./run.sh bootstrap
       shell: bash
