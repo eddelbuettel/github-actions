@@ -16,6 +16,7 @@ runs:
       uses: hendrikmuhs/ccache-action@v1.2.23
       with:
         key: ${{ inputs.cachefile }}
+        restore-keys: ${{ inputs.cachefile }}
         append-timestamp: true
         variant: ccache
         max-size: 10G # Github has a 10GB repo cache limit
@@ -25,7 +26,11 @@ runs:
       run: bash "${{ github.action_path }}/ccache_setup.sh"
       env:
         GH_TOKEN: ${{ github.token }}
-  
+
+    - name: Show ccache config
+      shell: bash
+      run: ccache --show-config
+        
     - name: Zero ccache stats
       shell: bash
       run: ccache --zero-stats
