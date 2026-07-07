@@ -26,8 +26,6 @@ runs:
     - name: Configure ccache for R
       shell: bash
       run: bash "${{ github.action_path }}/ccache_setup.sh"
-      env:
-        GH_TOKEN: ${{ github.token }}
 
     - name: Show ccache config
       shell: bash
