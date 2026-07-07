@@ -2,9 +2,10 @@ name: ccache-with-R
 description: Sets up ccache for use with R
 
 inputs:
-  cachefile:
+  key:
     description: |
-      Name of the cache file. Use '\$\{\{ github.repository \}\} on call.
+      Name of the cache file key. Use e.g. '\$\{\{ github.repository \}\}
+      (or parts of your matrix) on call.
     required: false
     default: 'ccache_file'
 
@@ -15,9 +16,10 @@ runs:
     - name: Get ccache
       uses: hendrikmuhs/ccache-action@v1.2.23
       with:
-        key: ${{ inputs.cachefile }}
-        restore-keys: ${{ inputs.cachefile }}
-        append-timestamp: true
+        key: ${{ inputs.key }}
+        restore-keys: ${{ inputs.key }}
+        ## The following three settings are re-stating their defaults for clarity
+        append-timestamp: true 
         variant: ccache
         max-size: 10G # Github has a 10GB repo cache limit
 
