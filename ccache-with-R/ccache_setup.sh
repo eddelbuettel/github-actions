@@ -2,18 +2,20 @@
 
 test -d ${HOME}/.R || mkdir ${HOME}/.R
 
-cat <<EOF > ${HOME}/.R/Makevars
-CC=ccache gcc -std=gnu2x
-CC17=ccache gcc -std=gnu17
-CC23=ccache gcc -std=gnu2x
-CC90=ccache gcc -std=gnu90
-CC99=ccache gcc -std=gnu99
-CXX=ccache g++
-CXX11=ccache g++ #-std=c++11
-CXX14=ccache g++ #-std=c++14
-CXX17=ccache g++ #-std=c++17
-CXX20=ccache g++ #-std=c++20
-CXX23=ccache g++ #-std=c++23
+CC=$(R CMD config CC)
+CXX=$(R CMD config CXX)
+cat <<EOF
+CC=ccache ${CC} -std=gnu2x
+CC17=ccache ${CC} -std=gnu17
+CC23=ccache ${CC} -std=gnu2x
+CC90=ccache ${CC} -std=gnu90
+CC99=ccache ${CC} -std=gnu99
+CXX=ccache ${CXX}
+CXX11=ccache ${CXX} #-std=c++11
+CXX14=ccache ${CXX} #-std=c++14
+CXX17=ccache ${CXX} #-std=c++17
+CXX20=ccache ${CXX} #-std=c++20
+CXX23=ccache ${CXX} #-std=c++23
 EOF
 
 test -d ${HOME}/.config/ccache || mkdir -p ${HOME}/.config/ccache
