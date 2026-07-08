@@ -1,10 +1,14 @@
 #!/bin/bash
 
-test -d ${HOME}/.R || mkdir ${HOME}/.R
+HASR=$(type -p R)
+if [ "$HASR" != "" ]; then
+    echo "Has R"
 
-CC=$(R CMD config CC)
-CXX=$(R CMD config CXX)
-cat <<EOF > ${HOME}/.R/Makevars
+    test -d ${HOME}/.R || mkdir ${HOME}/.R
+
+    CC=$(R CMD config CC)
+    CXX=$(R CMD config CXX)
+    cat <<EOF > ${HOME}/.R/Makevars
 CC=ccache ${CC} -std=gnu2x
 CC17=ccache ${CC} -std=gnu17
 CC23=ccache ${CC} -std=gnu2x
@@ -17,6 +21,8 @@ CXX17=ccache ${CXX} #-std=c++17
 CXX20=ccache ${CXX} #-std=c++20
 CXX23=ccache ${CXX} #-std=c++23
 EOF
+
+fi
 
 test -d ${HOME}/.config/ccache || mkdir -p ${HOME}/.config/ccache
 
