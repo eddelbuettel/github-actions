@@ -4,7 +4,7 @@ test -d ${HOME}/.R || mkdir ${HOME}/.R
 
 CC=$(R CMD config CC)
 CXX=$(R CMD config CXX)
-cat <<EOF
+cat <<EOF > ${HOME}/.R/Makevars
 CC=ccache ${CC} -std=gnu2x
 CC17=ccache ${CC} -std=gnu17
 CC23=ccache ${CC} -std=gnu2x
@@ -21,7 +21,6 @@ EOF
 test -d ${HOME}/.config/ccache || mkdir -p ${HOME}/.config/ccache
 
 cfgfile=${HOME}/.config/ccache/ccache.conf
-## test -f ${cfgfile} && echo "** Have ccache.conf" && cat ${cfgfile}
 
 cat <<EOF > ${cfgfile}
 # set base directory
@@ -36,4 +35,3 @@ sloppiness = include_file_ctime
 hash_dir = false
 EOF
 
-## test -f ${cfgfile} && echo "** Now have ccache.conf" && cat ${cfgfile}
