@@ -43,4 +43,3 @@ ccache --set-config "cache_dir=$(pwd)/.ccache"
 ccache --set-config "sloppiness=include_file_ctime"
 # also important as the (temporary) directory name will differ
 ccache --set-config "hash_dir=false"
-ccache --show-config
