@@ -1,9 +1,18 @@
 #!/bin/bash
 
-## Set CC and CXX to defaults or (if given / existing) environment variable
-CC=${CC:-"gcc"}
-CXX=${CXX:-"g++"}
+SYSNAME=$(uname)
 
+## Set CC and CXX to defaults or (if given / existing) environment variable
+if [ ${SYSNAME} = "Darwin" ]; then
+    CC=${CC:-"clang"}
+    CXX=${CXX:-"clang++"}
+else
+    # Linux and 'others' if any
+    CC=${CC:-"gcc"}
+    CXX=${CXX:-"g++"}
+fi
+
+## If we have R installed (say via r-ci) we can query what it has for CC and CXX
 HASR=$(type -p R)
 if [ "$HASR" != "" ]; then
     CC=$(R CMD config CC)
@@ -19,27 +28,19 @@ CC23=ccache ${CC} -std=gnu2x
 CC90=ccache ${CC} -std=gnu90
 CC99=ccache ${CC} -std=gnu99
 CXX=ccache ${CXX}
-CXX11=ccache ${CXX} #-std=c++11
-CXX14=ccache ${CXX} #-std=c++14
-CXX17=ccache ${CXX} #-std=c++17
-CXX20=ccache ${CXX} #-std=c++20
-CXX23=ccache ${CXX} #-std=c++23
+CXX11=ccache ${CXX}
+CXX14=ccache ${CXX}
+CXX17=ccache ${CXX}
+CXX20=ccache ${CXX}
+CXX23=ccache ${CXX}
 EOF
 
-test -d ${HOME}/.config/ccache || mkdir -p ${HOME}/.config/ccache
 
-cfgfile=${HOME}/.config/ccache/ccache.conf
-
-cat <<EOF > ${cfgfile}
-# set base directory
-base_dir = $(pwd)
-# set cache location directory
-cache_dir = $(pwd)/.ccache
-# set max size, this is also the default value at GH
-max_size = 10G
+# set base and cache directories, helps against random paths
+ccache --set-config "base_dir=$(pwd)"
+ccache --set-config "cache_dir=$(pwd)/.ccache"
 # important for R CMD INSTALL *.tar.gz as tarballs are expanded freshly -> fresh ctime
-sloppiness = include_file_ctime
+ccache --set-config "sloppiness=include_file_ctime"
 # also important as the (temporary) directory name will differ
-hash_dir = false
-EOF
-
+ccache --set-config "hash_dir=false"
+ccache --show-config
