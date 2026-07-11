@@ -8,6 +8,11 @@ inputs:
       (or parts of your matrix) on call.
     required: false
     default: 'ccache_file'
+  R:
+    description: |
+      Whether or not to setup ~/.R/Makevars for use of R with ccache
+    required: false
+    default: 'TRUE'
 
 runs:
   using: "composite"
@@ -23,10 +28,15 @@ runs:
         variant: ccache
         max-size: 10G # Github has a 10GB repo cache limit
 
-    - name: Configure ccache for R
+    - name: Configure ccache
       shell: bash
       run: bash "${{ github.action_path }}/ccache_setup.sh"
 
+    - name: Configure R
+      shell: bash
+      if: inputs.R == 'TRUE'
+      run: bash "${{ github.action_path }}/r_makevars_setup.sh"
+      
     - name: Show ccache config
       shell: bash
       run: ccache --show-config
