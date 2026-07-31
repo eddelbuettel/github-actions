@@ -7,16 +7,15 @@ This repository provides a space for GitHub Actions usable from the standard YAM
 
 #### Current
 
-- r-ci: Adds [r-ci](https://eddelbuettel.github.io/r-ci) 'R Continuous Integration' as an action supporting 'ubuntu-latest' or 'macos-latest' by downloading `run.sh` and running the bootstraps step. It takes two optional inputs: `dev_version` to fetch `dev_run.sh` instead of `run.sh`, and `backend` to pick `BSPM` (the default) or `RAPT` for binary installs on Linux:
+- r-ci: Adds [r-ci](https://eddelbuettel.github.io/r-ci) 'R Continuous Integration' as an action
+supporting 'ubuntu-latest' or 'macos-latest' by downloading `run.sh` and running the bootstraps
+step.
 
-```yaml
-      - name: Setup
-        uses: eddelbuettel/github-actions/r-ci@master
-        with:
-          backend: RAPT
-```
+- r2u-setup: Adds [r2u](https://eddelbuettel.github.io/r2u) to an action running Ubuntu 'latest'
+  ([example](https://github.com/eddelbuettel/spotifytop50us/blob/master/.github/workflows/update.yaml)) 
 
-- r2u-setup: Adds [r2u](https://eddelbuettel.github.io/r2u) to an action running Ubuntu 22.04 aka 'jammy' ([example](https://github.com/eddelbuettel/spotifytop50us/blob/master/.github/workflows/update.yaml))
+- ccache-with-R: Add [ccache](https://ccache.dev/) support for faster CI via cached compilation,
+  with full setup for R package CI
 
 #### Older
 

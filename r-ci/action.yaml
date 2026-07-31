@@ -10,8 +10,8 @@ inputs:
   backend:
     description: |
       Whether to use 'BSPM' or 'RAPT' as backend (and use upper-case to select either).
-      When left unset, run.sh's own default applies and an inherited BACKEND
-      environment variable is honoured.
+      When left unset, the choice in run.sh applies which is either following an
+      environment variable 'BACKEND' or its default value, currently 'BSPM'.
     required: false
     default: ''
 
@@ -21,19 +21,24 @@ runs:
     - name: Setup
       id: r-ci
       run: |
-        ## We currently do no need or provide a dev version so we just get run.sh
+        ## If a development version has been picked, use it.
+        ## Note that this development version may at time just be the default. But
+        ## if and when it differs, it can be picked here.
         if [[ ${{ inputs.dev_version }} == "TRUE" ]]; then
             curl -Ls https://eddelbuettel.github.io/r-ci/dev_run.sh -o run.sh
         else
             curl -OLs https://eddelbuettel.github.io/r-ci/run.sh
         fi
         chmod 0755 run.sh
-        ## Only override when the input was actually given, so that run.sh's own
-        ## `BACKEND=${BACKEND:-"BSPM"}` still sees an inherited environment
-        ## variable. Exporting unconditionally made `env: BACKEND: RAPT` in a
-        ## workflow silently ineffective.
+        ## Only override when the input was actually given and is value, otherwise
+        ## in run.sh the code `BACKEND=${BACKEND:-"BSPM"}` still sees an inherited
+        ## environment variable if give. 
         if [[ -n "${{ inputs.backend }}" ]]; then
-            export BACKEND=${{ inputs.backend }}
+            if [[ ("${{ inputs.backend }}" == "BSPM") || ("${{ inputs.backend }}" == "RAPT") ]]; then
+                export BACKEND=${{ inputs.backend }}
+            else
+                echo ":::warning:::BACKEND value '${inputs.backend}' ignored."
+            fi
         fi
         ./run.sh bootstrap
       shell: bash
