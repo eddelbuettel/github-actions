@@ -9,9 +9,11 @@ inputs:
     default: 'FALSE'
   backend:
     description: |
-      Whether to use 'BSPM' or 'RAPT' as backend (and use upper-case to select either)
+      Whether to use 'BSPM' or 'RAPT' as backend (and use upper-case to select either).
+      When left unset, run.sh's own default applies and an inherited BACKEND
+      environment variable is honoured.
     required: false
-    default: 'BSPM'
+    default: ''
 
 runs:
   using: "composite"
@@ -26,6 +28,12 @@ runs:
             curl -OLs https://eddelbuettel.github.io/r-ci/run.sh
         fi
         chmod 0755 run.sh
-        export BACKEND=${{ inputs.backend }}
+        ## Only override when the input was actually given, so that run.sh's own
+        ## `BACKEND=${BACKEND:-"BSPM"}` still sees an inherited environment
+        ## variable. Exporting unconditionally made `env: BACKEND: RAPT` in a
+        ## workflow silently ineffective.
+        if [[ -n "${{ inputs.backend }}" ]]; then
+            export BACKEND=${{ inputs.backend }}
+        fi
         ./run.sh bootstrap
       shell: bash
