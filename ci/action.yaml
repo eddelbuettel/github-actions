@@ -73,6 +73,7 @@ runs:
         else
             ./run_sh install_deps
         fi
+      shell: bash
         
         
       
