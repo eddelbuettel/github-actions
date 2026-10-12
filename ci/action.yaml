@@ -1,4 +1,4 @@
-name: 'ci' All-in Action from Checkout to Dependencies
+name: All-in Action from Checkout to Dependencies
 description: Checks out repo, sets up run.sh script, bootstraps r-ci and installs dependencies
 
 inputs:
