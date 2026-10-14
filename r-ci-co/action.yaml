@@ -19,6 +19,14 @@ runs:
   using: "composite"
   steps:
 
+    # Step 0: Warn if .git exists
+    - name: Check
+      shell: bash
+      run: |
+        if [[ -d .git ]]; then
+            echo "::notice::Directory .git already exists, any 'actions/checkout' you have can be removed."
+        fi
+        
     # Step 1: Nest the official actions/checkout inside our action
     - name: Check out repository code
       uses: actions/checkout@v7
@@ -43,7 +51,7 @@ runs:
             if [[ ("${{ inputs.backend }}" == "BSPM") || ("${{ inputs.backend }}" == "RAPT") ]]; then
                 export BACKEND=${{ inputs.backend }}
             else
-                echo ":::warning:::BACKEND value '${inputs.backend}' ignored."
+                echo "::warning::BACKEND value '${inputs.backend}' ignored."
             fi
         fi
         ./run.sh bootstrap
