@@ -48,7 +48,7 @@ runs:
             if [[ ("${{ inputs.backend }}" == "BSPM") || ("${{ inputs.backend }}" == "RAPT") ]]; then
                 export BACKEND=${{ inputs.backend }}
             else
-                echo ":::warning:::BACKEND value '${inputs.backend}' ignored."
+                echo "::warning::BACKEND value '${inputs.backend}' ignored."
             fi
         fi
         ./run.sh bootstrap
@@ -64,7 +64,7 @@ runs:
             if [[ ("${{ inputs.backend }}" == "BSPM") || ("${{ inputs.backend }}" == "RAPT") ]]; then
                 export BACKEND=${{ inputs.backend }}
             else
-                echo ":::warning:::BACKEND value '${inputs.backend}' ignored."
+                echo "::warning::BACKEND value '${inputs.backend}' ignored."
             fi
         fi
         ## By default install all dependencies and suggests
