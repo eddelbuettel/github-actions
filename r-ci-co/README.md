@@ -1,5 +1,5 @@
 
-## github-action 'r-ci-ci'
+## github-action 'r-ci-co'
 
 Following the initial `actions/checkout@vN`, this action sets up
 [r-ci](https://eddelbuettel.github.io/r-ci) for an action running Ubuntu
@@ -13,9 +13,9 @@ This version builds on the predecessors 'r-ci-setup' and 'r-ci' but now
 includes both the initial checkout and the commonly-following 'bootstrap'
 step for an all-in 'r-ci' preparation including setup and bootstrap.
 
-Why including the `actions@checkout@vN` step, one is freed from having to
-update it endless from N to N+1. This is now done once, here. If it is
-behind, please file an issue.
+By including the `actions@checkout@vN` step, one is freed from having to
+update it from N to N+1 every few months. This is now done once, here in this
+action. Should it ever be behind, please file an issue.
 
 ### Options
 
