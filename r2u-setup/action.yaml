@@ -21,6 +21,7 @@ runs:
         BSPM_VERSION_CHECK: ${{ inputs.bspm-version-check }}
       shell: bash
       run: |
+        echo "::notice::The GitHub Action 'r2u-setup' is soft-deprecated in favor of the more powerful 'r-ci' action. You may want to consider switching to it."
         curl -OLs https://eddelbuettel.github.io/r-ci/run.sh
         chmod 0755 run.sh
         ./run.sh bootstrap
