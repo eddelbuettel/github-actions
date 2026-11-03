@@ -19,5 +19,7 @@ runs:
       env:
         GH_TOKEN: ${{ github.token }}
         BSPM_VERSION_CHECK: ${{ inputs.bspm-version-check }}
-      run: bash "${{ github.action_path }}/r2u_setup.sh"
       shell: bash
+      run: |
+        curl -OLs https://eddelbuettel.github.io/r-ci/run.sh
+        chmod 0755 run.sh
