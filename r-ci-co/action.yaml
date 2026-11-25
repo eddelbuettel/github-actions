@@ -24,7 +24,7 @@ runs:
       shell: bash
       run: |
         if [[ -d .git ]]; then
-            echo "::notice::Directory '.git' already exists, so any 'actions/checkout@v*' can be safely removed as this action will also run it."
+            echo "::notice::Directory '.git' already exists, so 'actions/checkout@v*' can be removed as this action will also run it. See https://github.com/eddelbuettel/github-actions/issues/6 for more."
         fi
         
     # Step 1: Nest the official actions/checkout inside our action
